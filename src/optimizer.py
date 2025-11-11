@@ -1,0 +1,38 @@
+"""
+src/optimizer.py
+Train a simple ML model to predict the next system call (as a demonstration).
+"""
+
+import pandas as pd
+import os
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+import joblib
+
+def train_model(data_file="data/processed_data.csv", model_file="model/saved_model.pkl"):
+    if not os.path.exists(data_file):
+        raise FileNotFoundError(f"Data file '{data_file}' not found. Run preprocessor.py first.")
+
+    os.makedirs("model", exist_ok=True)
+    df = pd.read_csv(data_file)
+
+    # Features: current syscall code and normalized exec time
+    X = df[["SysCall_Code", "ExecTime_Normalized"]]
+    # Label: next syscall code (shifted)
+    y = df["SysCall_Code"].shift(-1).fillna(df["SysCall_Code"].mode()[0]).astype(int)
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    model = RandomForestClassifier(n_estimators=100, random_state=42)
+    model.fit(X_train, y_train)
+    preds = model.predict(X_test)
+    acc = accuracy_score(y_test, preds)
+
+    joblib.dump(model, model_file)
+    print(f"[+] Model trained with accuracy: {acc * 100:.2f}%")
+    print(f"[+] Model saved → {model_file}")
+    return {"accuracy": acc, "model_path": model_file}
+
+if __name__ == "__main__":
+    train_model()
