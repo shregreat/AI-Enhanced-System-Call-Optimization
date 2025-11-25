@@ -79,3 +79,18 @@ This improves both **CPU utilization** and **system responsiveness.**
    Launch the dashboard:  
    ```bash
    streamlit run dashboard/dashboard_app.py
+
+---
+
+## 👥 Contributors
+
+| Name | Contribution |
+|------|--------------|
+| Ayush Ranjan | Real-Time Monitoring system with psutil + UI Enhancements |
+| Srayansh Singh Verma | End-to-end ML pipeline, UI integration |
+| Ayush Tripathi | ML Evaluation: Confusion Matrix + Classification Report |
+
+---
+
+### 📌 Model Performance Visualization
+![Confusion Matrix](reports/confusion_matrix.png)
