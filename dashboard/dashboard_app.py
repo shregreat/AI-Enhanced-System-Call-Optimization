@@ -54,9 +54,48 @@ if page == "About":
     **Developers:**
     - 🧑‍💻 Ayush Ranjan (Real-Time Monitoring + Dashboard Enhancements)
     - 🧠 Srayansh Singh Verma (Pipeline, ML Model & Integration)
+    - 📊 Ayush Tripathi — Model Evaluation (Confusion Matrix + Classification Report)
     """)
 
 
+# ------------------ MODEL OUTPUT PAGE -------------------
+# if page == "Model Output":
+#     if not os.path.exists(DATA_PATH):
+#         st.error("Data not found. Run `python src/main.py` to generate.")
+#         st.stop()
+
+#     df = pd.read_csv(DATA_PATH)
+
+#     st.subheader("📋 Sample Data")
+#     st.dataframe(df.head())
+
+#     st.subheader("System Call Frequency")
+#     freq = df["SysCall"].value_counts().reset_index()
+#     freq.columns = ["SysCall", "Count"]
+#     fig1 = px.bar(freq, x="SysCall", y="Count", title="SysCall Frequency")
+#     st.plotly_chart(fig1, width="stretch")
+
+#     st.subheader("Execution Time Distribution")
+#     fig2 = px.box(df, x="SysCall", y="ExecTime(ms)", title="Exec Time Distribution")
+#     st.plotly_chart(fig2, width="stretch")
+
+#     model = safe_load_model()
+#     if model:
+#         st.subheader("🔮 Predict Next SysCall")
+#         syscall_list = sorted(df["SysCall"].unique())
+#         current = st.selectbox("Current SysCall", syscall_list)
+#         time_ms = st.slider("Execution Time (ms)", 0, 1000, 200)
+
+#         if st.button("Predict"):
+#             pred = predict_next_syscall(model, syscall_list.index(current), time_ms / 1000)
+#             st.success(f"Next predicted system call: **{pred}**")
+#     # --- Show Confusion Matrix Image if available ---
+#         cm_img_path = "reports/confusion_matrix.png"
+#         if os.path.exists(cm_img_path):
+#             st.subheader("📌 Confusion Matrix Visualization")
+#             st.image(cm_img_path, caption="Confusion Matrix for System Call Prediction", use_container_width=True)
+#         else:
+#             st.info("Confusion Matrix not found. Train model to generate it.")
 # ------------------ MODEL OUTPUT PAGE -------------------
 if page == "Model Output":
     if not os.path.exists(DATA_PATH):
@@ -72,11 +111,11 @@ if page == "Model Output":
     freq = df["SysCall"].value_counts().reset_index()
     freq.columns = ["SysCall", "Count"]
     fig1 = px.bar(freq, x="SysCall", y="Count", title="SysCall Frequency")
-    st.plotly_chart(fig1, width="stretch")
+    st.plotly_chart(fig1, use_container_width=True)
 
     st.subheader("Execution Time Distribution")
     fig2 = px.box(df, x="SysCall", y="ExecTime(ms)", title="Exec Time Distribution")
-    st.plotly_chart(fig2, width="stretch")
+    st.plotly_chart(fig2, use_container_width=True)
 
     model = safe_load_model()
     if model:
@@ -88,6 +127,17 @@ if page == "Model Output":
         if st.button("Predict"):
             pred = predict_next_syscall(model, syscall_list.index(current), time_ms / 1000)
             st.success(f"Next predicted system call: **{pred}**")
+
+        # ------------------ CONFUSION MATRIX -------------------
+            cm_img_path = "reports/confusion_matrix.png"
+            st.subheader("📌 Confusion Matrix Visualization")
+            if os.path.exists(cm_img_path):
+                st.image(cm_img_path, caption="Confusion Matrix for System Call Prediction", use_container_width=True)
+            else:
+                st.warning("❗ Confusion Matrix not found — run model training first (`python src/main.py`).")
+        else:
+            st.info("No trained model available. Train the model to enable predictions & evaluation charts.")
+
 
 
 # ------------------ REAL TIME MONITOR PAGE -------------------
