@@ -1,8 +1,4 @@
 
-
-
-
-
 # dashboard/dashboard_app.py
 """
 Streamlit dashboard for AI-Enhanced System Call Optimization
@@ -48,7 +44,7 @@ if page == "About":
     ### AI-Enhanced System Call Optimization Dashboard  
     **Features**:
     - System call performance visualization
-    - Real-Time OS resource monitor
+    - Real-Time OS resource monitor (Live Dashboard)
     - ML-based load prediction & scheduling recommendations
 
     **Developers:**
@@ -105,6 +101,22 @@ if page == "Model Output":
     df = pd.read_csv(DATA_PATH)
 
     st.subheader("📋 Sample Data")
+        # Show trained model accuracy if available
+    acc_path = "model/accuracy.txt"
+    if os.path.exists(acc_path):
+        with open(acc_path, "r") as f:
+            accuracy = f.read()
+        st.success(f"🎯 Model Accuracy: {accuracy}%")
+
+        # Performance suggestion
+        accuracy_val = float(accuracy)
+        if accuracy_val < 30:
+            st.warning("⚠️ Accuracy is low — consider retraining or tuning hyperparameters!")
+        elif accuracy_val < 70:
+            st.info("🙂 Good accuracy — small improvements possible.")
+        else:
+            st.success("🔥 Excellent! Model is performing strongly.")
+
     st.dataframe(df.head())
 
     st.subheader("System Call Frequency")
@@ -119,6 +131,13 @@ if page == "Model Output":
 
     model = safe_load_model()
     if model:
+        # Display Model Accuracy if score file exists
+        acc_file = "model/accuracy.txt"
+        if os.path.exists(acc_file):
+            with open(acc_file, "r") as f:
+                acc_value = f.read().strip()
+            st.metric("📊 Model Accuracy", f"{acc_value}%")
+
         st.subheader("🔮 Predict Next SysCall")
         syscall_list = sorted(df["SysCall"].unique())
         current = st.selectbox("Current SysCall", syscall_list)
