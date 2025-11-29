@@ -80,6 +80,8 @@ This improves both **CPU utilization** and **system responsiveness.**
    ```bash
    streamlit run dashboard/dashboard_app.py
 
+---
+
 ## 👥 Contributors
 
 | Name | Contribution |
@@ -91,3 +93,7 @@ This improves both **CPU utilization** and **system responsiveness.**
 ### 📌 Model Performance Visualization
 ![Confusion Matrix](reports/confusion_matrix.png)
 
+---
+
+### 📌 Model Performance Visualization
+![Confusion Matrix](reports/confusion_matrix.png)
