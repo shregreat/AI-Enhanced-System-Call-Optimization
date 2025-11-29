@@ -90,6 +90,9 @@ This improves both **CPU utilization** and **system responsiveness.**
 | Srayansh Singh Verma | End-to-end ML pipeline, UI integration |
 | Ayush Tripathi | ML Evaluation: Confusion Matrix + Classification Report |
 
+### 📌 Model Performance Visualization
+![Confusion Matrix](reports/confusion_matrix.png)
+
 ---
 
 ### 📌 Model Performance Visualization
