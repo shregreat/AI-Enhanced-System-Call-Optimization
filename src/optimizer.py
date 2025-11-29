@@ -67,6 +67,12 @@ def train_model(data_file="data/processed_data.csv", model_file="model/saved_mod
     print(f"[+] Model trained with accuracy: {acc * 100:.2f}%")
     print(f"[+] Model saved → {model_file}")
     print(f"[+] Confusion Matrix saved → {cm_path}")
+    
+    with open("model/accuracy.txt", "w") as f:
+        f.write(f"{acc * 100:.2f}")
     return {"accuracy": acc, "model_path": model_file}
+    # Save accuracy value for dashboard
+
+
 if __name__ == "__main__":
     train_model()
