@@ -92,8 +92,3 @@ This improves both **CPU utilization** and **system responsiveness.**
 
 ### 📌 Model Performance Visualization
 ![Confusion Matrix](reports/confusion_matrix.png)
-
----
-
-### 📌 Model Performance Visualization
-![Confusion Matrix](reports/confusion_matrix.png)
